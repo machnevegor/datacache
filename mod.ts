@@ -25,9 +25,7 @@ export class DataCache<Key, Model> {
       return this.resolve(cached);
     }
 
-    const result = await suppress<Model>(
-      () => this.fetch(key),
-    );
+    const result = await suppress(() => this.fetch(key));
 
     this.cache.set(key, result);
     return this.resolve(result);
