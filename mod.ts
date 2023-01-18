@@ -2,7 +2,7 @@ import { ResultType, suppress } from "./deps.ts";
 
 import type { Result } from "./deps.ts";
 
-export type Fetch<Key, Model> = (key: Key) => Promise<Model>;
+export type Fetch<Key, Model> = (key: Key) => Model | Promise<Model>;
 
 export interface CacheMap<Key, Model> {
   get(key: Key): Result<Model> | undefined;

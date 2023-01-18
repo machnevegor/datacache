@@ -10,7 +10,7 @@ interface User {
 ```ts
 import type { Fetch } from "https://deno.land/x/datacache@0.1.0/mod.ts";
 
-const fetchUser: Fetch<number, User> = (id) => {
+const fetchUser: Fetch<number, User> = async (id) => {
   // fetch a user from the database
 };
 ```
