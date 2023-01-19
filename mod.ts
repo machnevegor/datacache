@@ -2,19 +2,21 @@ import { ResultType, suppress } from "./deps.ts";
 
 import type { Result } from "./deps.ts";
 
+export type { Result };
+
 export type Fetch<Key, Model> = (key: Key) => Model | Promise<Model>;
 
-export interface CacheMap<Key, Model> {
-  get(key: Key): Result<Model> | undefined;
-  set(key: Key, value: Result<Model>): void;
+export interface Cache<Key, Value> {
+  get(key: Key): Value | undefined;
+  set(key: Key, value: Value): void;
   delete(key: Key): void;
 }
 
 export class DataCache<Key, Model> {
   private readonly fetch: Fetch<Key, Model>;
-  private readonly cache: CacheMap<Key, Model>;
+  private readonly cache: Cache<Key, Result<Model>>;
 
-  constructor(fetch: Fetch<Key, Model>, cache: CacheMap<Key, Model>) {
+  constructor(fetch: Fetch<Key, Model>, cache: Cache<Key, Result<Model>>) {
     this.fetch = fetch;
     this.cache = cache;
   }
