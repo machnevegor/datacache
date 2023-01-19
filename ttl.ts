@@ -1,12 +1,12 @@
-import type { Cache } from "./mod.ts";
+import type { Storage } from "./mod.ts";
 
-export interface Cached<Value> {
+export interface MapUnit<Value> {
   value: Value;
   expires: number;
 }
 
-export class TTLMap<Key, Value> implements Cache<Key, Value> {
-  private readonly map: Map<Key, Cached<Value>>;
+export class TTLMap<Key, Value> implements Storage<Key, Value> {
+  private readonly map: Map<Key, MapUnit<Value>>;
   private readonly ttl: number;
 
   constructor(ms: number) {
@@ -15,10 +15,10 @@ export class TTLMap<Key, Value> implements Cache<Key, Value> {
   }
 
   get(key: Key): Value | undefined {
-    const item = this.map.get(key);
-    if (item) {
-      if (item.expires > Date.now()) {
-        return item.value;
+    const unit = this.map.get(key);
+    if (unit) {
+      if (unit.expires > Date.now()) {
+        return unit.value;
       }
       this.map.delete(key);
     }

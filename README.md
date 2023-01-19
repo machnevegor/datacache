@@ -35,7 +35,7 @@ Import the DataCache class and pass in a function that will fetch data using a
 **unique key**, and a storage that will keep the results of fetching.
 
 ```ts
-import { DataCache } from "https://deno.land/x/datacache@0.1.0/mod.ts";
+import { DataCache } from "https://deno.land/x/datacache@0.2.0/mod.ts";
 
 const cache = new DataCache<number, User>(
     fetchUser,
@@ -85,15 +85,18 @@ You can also use your own storage with more functionality and efficiency than
 Map.
 
 ```ts
-import type { Cache, Result } from "https://deno.land/x/datacache@0.1.0/mod.ts";
+import type {
+  Result,
+  Storage,
+} from "https://deno.land/x/datacache@0.2.0/mod.ts";
 
-interface Cached<Value> {
+interface MapUnit<Value> {
   value: Value;
   expires: number;
 }
 
-class TTLMap<Key, Value> implements Cache<Key, Value> {
-  private readonly map: Map<Key, Cached<Value>>;
+class TTLMap<Key, Value> implements Storage<Key, Value> {
+  private readonly map: Map<Key, MapUnit<Value>>;
   private readonly ttl: number;
 
   constructor(ms: number) {
@@ -102,10 +105,10 @@ class TTLMap<Key, Value> implements Cache<Key, Value> {
   }
 
   get(key: Key): Value | undefined {
-    const item = this.map.get(key);
-    if (item) {
-      if (item.expires > Date.now()) {
-        return item.value;
+    const unit = this.map.get(key);
+    if (unit) {
+      if (unit.expires > Date.now()) {
+        return unit.value;
       }
       this.map.delete(key);
     }
