@@ -100,8 +100,8 @@ class TTLMap<Key, Value> implements Storage<Key, Value> {
   private readonly map: Map<Key, Entry<Value>>;
 
   constructor(ms: number) {
-    this.map = new Map();
     this.ttl = ms;
+    this.map = new Map();
   }
 
   get(key: Key): Value | undefined {

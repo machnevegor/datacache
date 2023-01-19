@@ -8,8 +8,8 @@ export class TTLMap<Key, Value> {
   private readonly map: Map<Key, Entry<Value>>;
 
   constructor(ms: number) {
-    this.map = new Map();
     this.ttl = ms;
+    this.map = new Map();
   }
 
   get(key: Key): Value | undefined {
