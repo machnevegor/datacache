@@ -1,13 +1,11 @@
-import type { Storage } from "./mod.ts";
-
-export interface MapUnit<Value> {
+export interface Entry<Value> {
   value: Value;
   expires: number;
 }
 
-export class TTLMap<Key, Value> implements Storage<Key, Value> {
-  private readonly map: Map<Key, MapUnit<Value>>;
+export class TTLMap<Key, Value> {
   private readonly ttl: number;
+  private readonly map: Map<Key, Entry<Value>>;
 
   constructor(ms: number) {
     this.map = new Map();

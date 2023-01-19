@@ -90,14 +90,14 @@ import type {
   Storage,
 } from "https://deno.land/x/datacache@0.2.0/mod.ts";
 
-interface MapUnit<Value> {
+interface Entry<Value> {
   value: Value;
   expires: number;
 }
 
 class TTLMap<Key, Value> implements Storage<Key, Value> {
-  private readonly map: Map<Key, MapUnit<Value>>;
   private readonly ttl: number;
+  private readonly map: Map<Key, Entry<Value>>;
 
   constructor(ms: number) {
     this.map = new Map();
