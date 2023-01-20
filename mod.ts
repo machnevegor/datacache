@@ -30,7 +30,7 @@ export class DataCache<Key, Model> {
       return this.resolve(cached);
     }
 
-    const result = await suppress(() => this.fetcher(key));
+    const result = await suppress(() => this.fetcher(key), Error);
 
     this.storage.set(key, result);
     return this.resolve(result);
@@ -52,7 +52,7 @@ export class DataCache<Key, Model> {
       case ResultType.SUCCESS:
         return result.data;
       case ResultType.FAILURE:
-        throw new Error(result.message);
+        throw result.exception;
     }
   }
 }
