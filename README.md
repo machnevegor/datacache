@@ -35,7 +35,7 @@ Import the DataCache class and pass in a function that will fetch data using a
 **unique key**, and a storage that will keep the results of fetching.
 
 ```ts
-import { DataCache } from "https://deno.land/x/datacache@0.2.0/mod.ts";
+import { DataCache } from "https://deno.land/x/datacache@0.3.0/mod.ts";
 
 const cache = new DataCache<number, User>(
     fetchUser,
@@ -88,7 +88,7 @@ Map.
 import type {
   Result,
   Storage,
-} from "https://deno.land/x/datacache@0.2.0/mod.ts";
+} from "https://deno.land/x/datacache@0.3.0/mod.ts";
 
 interface Entry<Value> {
   value: Value;
